@@ -1,0 +1,31 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/solicitudes-app', '.']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/solicitudes-app']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'solicitudes-app'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/solicitudes-app'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--set-env-vars'
+      - 'DATABASE_URL=${_DATABASE_URL}'
+      - '--set-env-vars'
+      - 'GOOGLE_SHEET_ID=${_GOOGLE_SHEET_ID}'
+
+images:
+  - 'gcr.io/$PROJECT_ID/solicitudes-app'
+
+substitutions:
+  _DATABASE_URL: 'postgresql://user:pass@host:5432/db'
+  _GOOGLE_SHEET_ID: 'your-sheet-id'

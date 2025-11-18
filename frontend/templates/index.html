@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Solicitudes de Automatización</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Centro de Automatización de Procesos</h1>
+            <p>Centraliza, registra y da seguimiento a las solicitudes de automatización de tu área</p>
+        </div>
+    </header>
+
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="statTotal">0</div>
+                    <div class="stat-label">Total</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statRecibidas">0</div>
+                    <div class="stat-label">Recibidas</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statAnalisis">0</div>
+                    <div class="stat-label">En Análisis</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statDesarrollo">0</div>
+                    <div class="stat-label">En Desarrollo</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="statCompletadas">0</div>
+                    <div class="stat-label">Completadas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="nueva">Nueva Solicitud</button>
+                <button class="tab-btn" data-tab="listado">Ver Solicitudes</button>
+            </div>
+
+            <div id="nueva" class="tab-content active">
+                <div class="card">
+                    <h2 class="card-title">Registrar Nueva Solicitud de Automatización</h2>
+                    <form id="solicitudForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="area" class="required">Área Solicitante</label>
+                                <select id="area" required>
+                                    <option value="">Seleccione su área</option>
+                                    <option value="SCC">SCC</option>
+                                    <option value="Psychology">Psychology</option>
+                                    <option value="CC&C">CC&C</option>
+                                    <option value="WAE's">WAE's</option>
+                                    <option value="DCO">DCO</option>
+                                    <option value="Packets">Packets</option>
+                                    <option value="CA's">CA's</option>
+                                    <option value="Follow up">Follow up</option>
+                                    <option value="Customer Service">Customer Service</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="nombre" class="required">Nombre del Solicitante</label>
+                                <input type="text" id="nombre" required placeholder="Ej: María García">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="required">Correo Electrónico</label>
+                            <input type="email" id="email" required placeholder="correo@empresa.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="titulo" class="required">Título del Proceso a Automatizar</label>
+                            <input type="text" id="titulo" required placeholder="Ej: Generación automática de reportes semanales de casos">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="descripcion" class="required">Descripción Detallada del Proceso</label>
+                            <textarea id="descripcion" required placeholder="Describa paso a paso cómo se realiza actualmente el proceso que desea automatizar..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="situacionActual" class="required">Situación Actual (Pain Points)</label>
+                            <textarea id="situacionActual" required placeholder="¿Cuáles son los problemas o ineficiencias actuales? ¿Por qué es necesario automatizar este proceso?"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="resultadoEsperado" class="required">Resultado Esperado</label>
+                            <textarea id="resultadoEsperado" required placeholder="¿Cómo se vería el proceso ideal una vez automatizado? ¿Qué beneficios espera obtener?"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="urgencia" class="required">Nivel de Urgencia</label>
+                                <select id="urgencia" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="Baja">Baja - Puede esperar</option>
+                                    <option value="Media">Media - Importante pero no urgente</option>
+                                    <option value="Alta">Alta - Se necesita pronto</option>
+                                    <option value="Crítica">Crítica - Urgente</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="impacto" class="required">Impacto en el Negocio</label>
+                                <select id="impacto" required>
+                                    <option value="">Seleccione</option>
+                                    <option value="Bajo">Bajo - Mejora menor</option>
+                                    <option value="Medio">Medio - Mejora significativa</option>
+                                    <option value="Alto">Alto - Transformación importante</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="frecuencia">Frecuencia del Proceso</label>
+                                <input type="text" id="frecuencia" placeholder="Ej: Diario, Semanal, Mensual, Por evento">
+                            </div>
+                            <div class="form-group">
+                                <label for="tiempoManual">Tiempo Manual Estimado</label>
+                                <input type="text" id="tiempoManual" placeholder="Ej: 2 horas por día, 8 horas semanales">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="sistemas">Sistemas o Herramientas Involucradas</label>
+                            <textarea id="sistemas" placeholder="Ej: Excel, Sistema de gestión de casos, Correo electrónico, CRM, etc."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="enlaces">Enlaces a Documentación o Recursos</label>
+                            <textarea id="enlaces" placeholder="Pegue aquí enlaces a documentos, videos, o recursos que ayuden a entender el proceso"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
+                    </form>
+                </div>
+            </div>
+
+            <div id="listado" class="tab-content">
+                <div class="card">
+                    <h2 class="card-title">Listado de Solicitudes</h2>
+
+                    <div class="filters">
+                        <select id="filterArea" onchange="loadSolicitudes()">
+                            <option value="">Todas las áreas</option>
+                            <option value="SCC">SCC</option>
+                            <option value="Psychology">Psychology</option>
+                            <option value="CC&C">CC&C</option>
+                            <option value="WAE's">WAE's</option>
+                            <option value="DCO">DCO</option>
+                            <option value="Packets">Packets</option>
+                            <option value="CA's">CA's</option>
+                            <option value="Follow up">Follow up</option>
+                            <option value="Customer Service">Customer Service</option>
+                        </select>
+
+                        <select id="filterEstado" onchange="loadSolicitudes()">
+                            <option value="">Todos los estados</option>
+                            <option value="Recibido">Recibido</option>
+                            <option value="En Análisis">En Análisis</option>
+                            <option value="En Desarrollo">En Desarrollo</option>
+                            <option value="Completado">Completado</option>
+                        </select>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="solicitudes-table">
+                            <thead>
+                                <tr>
+                                    <th>No. Solicitud</th>
+                                    <th>Área</th>
+                                    <th>Proceso</th>
+                                    <th>Urgencia</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="solicitudesTableBody">
+                                <tr>
+                                    <td colspan="6" class="loading">
+                                        <div class="spinner"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h2 class="card-title">Detalles de la Solicitud</h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+
+    <footer>
+        <div class="container">
+            <p>Centro de Automatización de Procesos - Firma Legal de Visas Humanitarias</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

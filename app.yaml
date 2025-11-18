@@ -1,0 +1,22 @@
+runtime: python311
+
+instance_class: F2
+
+env_variables:
+  DATABASE_URL: "your-cloud-sql-connection-string"
+  GOOGLE_SHEET_ID: "your-google-sheet-id"
+  GOOGLE_CREDENTIALS_JSON: "your-service-account-json"
+
+handlers:
+  - url: /static
+    static_dir: frontend/static
+
+  - url: /.*
+    script: auto
+
+entrypoint: uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT
+
+automatic_scaling:
+  min_instances: 0
+  max_instances: 10
+  target_cpu_utilization: 0.65
