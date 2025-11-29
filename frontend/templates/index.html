@@ -70,7 +70,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="nombre" class="required">Nombre del Solicitante</label>
-                                <input type="text" id="nombre" required placeholder="Ej: María García">
+                                <!-- Pydantic: min_length=2, max_length=100 -->
+                                <input type="text" id="nombre" required minlength="2" maxlength="100"
+                                    placeholder="Ej: María García">
+                                <small class="help-text">Mínimo 2 caracteres, máximo 100.</small>
                             </div>
                         </div>
 
@@ -81,22 +84,34 @@
 
                         <div class="form-group">
                             <label for="titulo" class="required">Título del Proceso a Automatizar</label>
-                            <input type="text" id="titulo" required placeholder="Ej: Generación automática de reportes semanales de casos">
+                            <!-- Pydantic: min_length=5, max_length=200 -->
+                            <input type="text" id="titulo" required minlength="5" maxlength="200"
+                                placeholder="Ej: Generación automática de reportes semanales de casos">
+                            <small class="help-text">Mínimo 5 caracteres, máximo 200.</small>
                         </div>
 
                         <div class="form-group">
                             <label for="descripcion" class="required">Descripción Detallada del Proceso</label>
-                            <textarea id="descripcion" required placeholder="Describa paso a paso cómo se realiza actualmente el proceso que desea automatizar..."></textarea>
+                            <!-- Pydantic: min_length=20 -->
+                            <textarea id="descripcion" required minlength="20"
+                                    placeholder="Describa paso a paso cómo se realiza actualmente el proceso que desea automatizar..."></textarea>
+                            <small class="help-text">Mínimo 20 caracteres.</small>
                         </div>
 
                         <div class="form-group">
                             <label for="situacionActual" class="required">Situación Actual (Pain Points)</label>
-                            <textarea id="situacionActual" required placeholder="¿Cuáles son los problemas o ineficiencias actuales? ¿Por qué es necesario automatizar este proceso?"></textarea>
+                            <!-- Pydantic: min_length=10 -->
+                            <textarea id="situacionActual" required minlength="10"
+                                    placeholder="¿Cuáles son los problemas o ineficiencias actuales? ¿Por qué es necesario automatizar este proceso?"></textarea>
+                            <small class="help-text">Mínimo 10 caracteres.</small>
                         </div>
 
                         <div class="form-group">
                             <label for="resultadoEsperado" class="required">Resultado Esperado</label>
-                            <textarea id="resultadoEsperado" required placeholder="¿Cómo se vería el proceso ideal una vez automatizado? ¿Qué beneficios espera obtener?"></textarea>
+                            <!-- Pydantic: min_length=10 -->
+                            <textarea id="resultadoEsperado" required minlength="10"
+                                    placeholder="¿Cómo se vería el proceso ideal una vez automatizado? ¿Qué beneficios espera obtener?"></textarea>
+                            <small class="help-text">Mínimo 10 caracteres.</small>
                         </div>
 
                         <div class="form-row">
@@ -124,23 +139,30 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="frecuencia">Frecuencia del Proceso</label>
-                                <input type="text" id="frecuencia" placeholder="Ej: Diario, Semanal, Mensual, Por evento">
+                                <input type="text" id="frecuencia"
+                                    placeholder="Ej: Diario, Semanal, Mensual, Por evento">
                             </div>
                             <div class="form-group">
                                 <label for="tiempoManual">Tiempo Manual Estimado</label>
-                                <input type="text" id="tiempoManual" placeholder="Ej: 2 horas por día, 8 horas semanales">
+                                <input type="text" id="tiempoManual"
+                                    placeholder="Ej: 2 horas por día, 8 horas semanales">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label for="sistemas">Sistemas o Herramientas Involucradas</label>
-                            <textarea id="sistemas" placeholder="Ej: Excel, Sistema de gestión de casos, Correo electrónico, CRM, etc."></textarea>
+                            <textarea id="sistemas"
+                                    placeholder="Ej: Excel, Sistema de gestión de casos, Correo electrónico, CRM, etc."></textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="enlaces">Enlaces a Documentación o Recursos</label>
-                            <textarea id="enlaces" placeholder="Pegue aquí enlaces a documentos, videos, o recursos que ayuden a entender el proceso"></textarea>
+                            <textarea id="enlaces"
+                                    placeholder="Pegue aquí enlaces a documentos, videos, o recursos que ayuden a entender el proceso"></textarea>
                         </div>
+
+                        <!-- contenedor para mostrar errores de backend si los quieres usar luego -->
+                        <div id="formErrors" class="form-errors" style="display:none;"></div>
 
                         <button type="submit" class="btn btn-primary">Enviar Solicitud</button>
                     </form>

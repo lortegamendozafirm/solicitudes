@@ -1,10 +1,11 @@
 import os
+import json
+from typing import Optional
+
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-from typing import Optional
-import json
-
+from httplib2 import ServerNotFoundError  # 👈 importa este
 
 class GoogleSheetsService:
     def __init__(self):
@@ -14,6 +15,8 @@ class GoogleSheetsService:
 
         if self.credentials_json and self.spreadsheet_id:
             self._initialize_service()
+        else:
+            print("Google Sheets: variables de entorno no configuradas, se desactiva integración.")
 
     def _initialize_service(self):
         try:
@@ -23,13 +26,14 @@ class GoogleSheetsService:
                 scopes=['https://www.googleapis.com/auth/spreadsheets']
             )
             self.service = build('sheets', 'v4', credentials=credentials)
+            print("Google Sheets service inicializado correctamente.")
         except Exception as e:
             print(f"Error initializing Google Sheets service: {e}")
             self.service = None
 
     def append_solicitud(self, solicitud_data: dict) -> bool:
         if not self.service:
-            print("Google Sheets service not initialized")
+            print("Google Sheets service not initialized, se omite append.")
             return False
 
         try:
@@ -65,12 +69,14 @@ class GoogleSheetsService:
             print(f"Solicitud added to Google Sheets: {result}")
             return True
 
-        except HttpError as error:
+        except (HttpError, ServerNotFoundError, Exception) as error:
+            # 👈 ahora se captura también el problema de red
             print(f"Error appending to Google Sheets: {error}")
             return False
 
     def update_estado(self, numero_solicitud: str, nuevo_estado: str) -> bool:
         if not self.service:
+            print("Google Sheets service not initialized, se omite update_estado.")
             return False
 
         try:
@@ -92,16 +98,19 @@ class GoogleSheetsService:
                         valueInputOption='USER_ENTERED',
                         body=body
                     ).execute()
+                    print(f"Estado actualizado en Google Sheets para {numero_solicitud} -> {nuevo_estado}")
                     return True
 
+            print(f"No se encontró la solicitud {numero_solicitud} en Google Sheets.")
             return False
 
-        except HttpError as error:
+        except (HttpError, ServerNotFoundError, Exception) as error:
             print(f"Error updating Google Sheets: {error}")
             return False
 
     def setup_headers(self) -> bool:
         if not self.service:
+            print("Google Sheets service not initialized, se omite setup_headers.")
             return False
 
         try:
@@ -133,9 +142,10 @@ class GoogleSheetsService:
                 body=body
             ).execute()
 
+            print("Encabezados configurados en Google Sheets.")
             return True
 
-        except HttpError as error:
+        except (HttpError, ServerNotFoundError, Exception) as error:
             print(f"Error setting up headers: {error}")
             return False
 
